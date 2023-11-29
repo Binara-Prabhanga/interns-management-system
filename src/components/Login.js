@@ -1,54 +1,46 @@
 // src/components/Login.js
-
-import React from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import React, { useState } from 'react';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://your-api-endpoint/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      if (response.ok) {
+
+      } else {
+
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
   return (
-    <Container className="mt-5">
-      <h2 className="text-center mb-4">Interns Management System</h2>
-      <Form style={formStyle}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            style={inputStyle}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            style={inputStyle}
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit" style={buttonStyle}>
+    <div>
+      <h2>Login</h2>
+      <form>
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <br />
+        <label>Password:</label>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <br />
+        <button type="button" onClick={handleLogin}>
           Login
-        </Button>
-      </Form>
-    </Container>
+        </button>
+      </form>
+    </div>
   );
-};
-
-// Styles
-const formStyle = {
-  maxWidth: "400px",
-  margin: "auto",
-  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-  padding: "20px",
-  borderRadius: "8px",
-};
-
-const inputStyle = {
-  marginBottom: "15px",
-};
-
-const buttonStyle = {
-  width: "100%",
 };
 
 export default Login;
