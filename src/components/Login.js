@@ -1,6 +1,6 @@
 // Login.js
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   ThemeProvider,
   CssBaseline,
@@ -17,33 +17,29 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme } from "@mui/material/styles";
-import { login } from '../services/authService';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log('Submit button clicked!');
-      await login(email, password);
-      // Redirect to AdminDashboard page
-      history.push('/admin-dashboard');
+      console.log("Submit button clicked!");
+      history.push("/admin-dashboard");
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
     }
   };
 
-  // Create a theme
   const customTheme = createTheme({
     palette: {
       primary: {
-        main: '#dad7cd',
+        main: "#331C7A",
       },
       secondary: {
-        main: '#a3b18a',
+        main: "#FF615A",
       },
     },
   });
@@ -123,8 +119,8 @@ const Login = () => {
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link to="/registration" variant="body2">
+              <Grid item type="submit">
+                <Link href="/registration" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

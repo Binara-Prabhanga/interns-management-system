@@ -10,23 +10,75 @@ import {
   Typography,
   TextField,
   Button,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import { createTheme } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 
 const Registration = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Admin"); 
+  const [errors, setErrors] = useState({});
+  const history = useHistory();
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Validate name
+    if (!name.trim()) {
+      errors.name = "Name is required";
+    }
+
+    // Validate email
+    if (!email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Invalid email address";
+    }
+
+    // Validate password
+    if (!password.trim()) {
+      errors.password = "Password is required";
+    } else if (password.length < 6) {
+      errors.password = "Password must be at least 6 characters long";
+    }
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0; // Return true if there are no errors
+  };
 
   const handleRegistration = async () => {
+    // Validate form before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       // Sending data to the backend
       const response = await axios.post("http://localhost:3001/user/register", {
+        name,
         email,
         password,
+        role,
       });
       // Success
       console.log("Registration successful", response.data);
+      // Redirect based on the user's role
+      const userRole = response.data.user.role;
+      if (userRole === "Admin" || userRole === "Manager") {
+        history.push("/");
+      } else if (userRole === "Evaluator") {
+        history.push("/evaluator-dashboard");
+      } else {
+        history.push("/intern-dashboard");
+      }
     } catch (error) {
       // Unsuccessful
       console.error("Registration failed", error.message);
@@ -41,10 +93,23 @@ const Registration = () => {
   const customTheme = createTheme({
     palette: {
       primary: {
-        main: "#3a5a40",
+        main: "#331C7A",
       },
       secondary: {
-        main: "#588157",
+        main: "#FF615A",
+      },
+      complementary: {
+        purple: "#6954FA",
+        deepBlue: "#482890",
+      },
+      neutral: {
+        white: "#ffffff",
+        lightGray: "#f8f9fa",
+      },
+      additional: {
+        lighterBlue: "#ecf0f1",
+        red: "#e74c3c",
+        lightBeige: "#dad7cd",
       },
     },
   });
@@ -61,13 +126,31 @@ const Registration = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: customTheme.palette.secondary.main }}>
             <PersonAddOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{ color: "#3a5a40" }}>
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ color: customTheme.palette.primary.main }}
+          >
             Create an Account
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              error={errors.name ? true : false}
+              helperText={errors.name}
+            />
             <TextField
               margin="normal"
               required
@@ -79,6 +162,8 @@ const Registration = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={setErrors.email ? true : false}
+              helperText={setErrors.email}
             />
             <TextField
               margin="normal"
@@ -91,7 +176,24 @@ const Registration = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={setErrors.password ? true : false}
+              helperText={setErrors.password}
             />
+            <FormControl fullWidth sx={{ mt: 1 }}>
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                id="role"
+                value={role}
+                label="Role"
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <MenuItem value="Admin">Admin</MenuItem>
+                <MenuItem value="Mentor">Mentor</MenuItem>
+                <MenuItem value="Evaluator">Evaluator</MenuItem>
+                <MenuItem value="Manager">Manager</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               type="button"
               onClick={handleRegistration}
@@ -100,7 +202,7 @@ const Registration = () => {
               sx={{
                 mt: 3,
                 mb: 2,
-                backgroundColor: "#3a5a40",
+                backgroundColor: customTheme.palette.primary.main,
                 color: "white",
               }}
             >
@@ -108,7 +210,11 @@ const Registration = () => {
             </Button>
           </Box>
           <Typography
-            sx={{ marginTop: "20px", fontSize: "14px", color: "#3a5a40" }}
+            sx={{
+              marginTop: "20px",
+              fontSize: "14px",
+              color: customTheme.palette.primary.main,
+            }}
           >
             Or register with:
           </Typography>
@@ -118,7 +224,11 @@ const Registration = () => {
             fullWidth
             variant="contained"
             color="secondary"
-            sx={{ mt: 2, backgroundColor: "#588157", color: "white" }}
+            sx={{
+              mt: 2,
+              backgroundColor: customTheme.palette.secondary.main,
+              color: "white",
+            }}
           >
             Sign Up with Google
           </Button>

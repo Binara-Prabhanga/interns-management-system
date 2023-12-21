@@ -1,0 +1,132 @@
+/*C:\Users\BinaraP\Documents\Xternship\interns-management-system-1\src\components\Admin\Admin.module.css*/
+
+.wholeComponent {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .leftNav {
+    width: 280px;
+    background-color: #ffffff;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-right: 1px solid #ccc;
+  }
+  
+  .heading {
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .breadcrumbs {
+    margin-bottom: 20px;
+    font-size:small;
+  }
+  
+  .leftNavItems {
+    flex-direction: column; 
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+    align-items: left;
+    display: flex;
+  }
+  
+  .leftNavIcon {
+    margin-right: 8px;
+  }
+  
+  .leftNavButton {
+    color: #073a74;
+    width: 100%;
+    border: 0;
+    padding-left: 0;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-transform: none;
+  }
+  
+  .leftNavButtonHighlighted {
+    font-weight: bold;
+    color: #073a74;
+    width: 100%;
+    border: 0;
+    padding-left: 0;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-transform: none;
+  }
+  .leftNavButton:hover,
+  .leftNavButtonHighlighted:hover {
+    border: 0; 
+  }
+  
+  /*CREATE ACCOUNT*/
+  .cAMainBox{
+    margin-top:70px;
+    display: flex;
+    flex-Direction: column;
+    align-Items: center;
+    color: #331C7A;
+  }
+  
+  .typography{
+    color: #331C7A;
+  }
+  
+  .createAccountBox2{
+    margin-top: 10px;
+  }
+  .createAccountText{
+    color: #331C7A;
+  }
+  
+  .submitButton{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-Color:#FF615A;  
+    color: #ffffff;
+    text-transform: none;
+    font-size:medium;
+  }
+  
+  .upgradeButton{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: #FF615A;
+    color: #ffffff;
+    text-Transform: none;
+  }
+  
+  .downgradeButton{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: #FF615A;
+    color: #ffffff;
+    text-Transform: none;
+  }
+  .confirmationModelTypography{
+    margin-bottom: 10px; 
+    color: #2c3e50;
+  }
+  .confirmationModelTypography2{
+    margin-bottom: 20px; 
+    color: #34495e;
+  }
+  .confirmationModelClose{
+    background-color: #bdc3c7;
+    color: #2c3e50;
+    width: 45%;
+  }
+  .confirmationModelConfirmation{
+    background-color: #FF615A;
+    color: #ffffff;
+    width: 45%;
+  } 
